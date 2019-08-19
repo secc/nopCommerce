@@ -1,7 +1,7 @@
 ﻿@model RegisterModel
 @using Nop.Web.Models.Customer;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Register").Text);
@@ -10,9 +10,9 @@
 {
     <script type="text/javascript">
         $(function () {
-            $("#@Html.FieldIdFor(model => model.CountryId)").change(function () {
-             var selectedItem = $(this).val();
-             var ddlStates = $("#@Html.FieldIdFor(model => model.StateProvinceId)");
+            //$("#@Html.FieldIdFor(model => model.CountryId)").change(function () {
+            var selectedItem = $("#@Html.FieldIdFor(model => model.CountryId)").val();
+                 var ddlStates = $("#@Html.FieldIdFor(model => model.StateProvinceId)");
                 var statesProgress = $("#states-loading-progress");
                 statesProgress.show();
                 $.ajax({
@@ -23,7 +23,13 @@
                     success: function (data) {
                         ddlStates.html('');
                         $.each(data, function (id, option) {
-                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                            //secc temporary fix (version 3.5 of NOP should fix this in the controllers which makes more sense)
+                            if (option.name == "Kentucky") {
+                                ddlStates.append($('<option></option>').val(option.id).html(option.name).attr("selected", "selected"));
+                            }
+                            else {
+                                ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                            }
                         });
                         statesProgress.hide();
                     },
@@ -32,7 +38,9 @@
                         statesProgress.hide();
                     }
                 });
-            });
+           // });
+
+            //$('#CountryId').change();
      });
     </script>
 }
@@ -180,18 +188,6 @@
                                 @Html.ValidationMessageFor(model => model.StreetAddress2)
                             </div>
                         }
-                        @if (Model.ZipPostalCodeEnabled)
-                        {
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.ZipPostalCode, new { }, ":")
-                            @Html.EditorFor(model => model.ZipPostalCode)
-                                @if (Model.ZipPostalCodeRequired)
-                                {
-                                    @Html.RequiredHint()
-                                }
-                                @Html.ValidationMessageFor(model => model.ZipPostalCode)
-                            </div>
-                        }
                         @if (Model.CityEnabled)
                         {
                             <div class="inputs">
@@ -204,13 +200,6 @@
                                 @Html.ValidationMessageFor(model => model.City)
                             </div>
                         }
-                        @if (Model.CountryEnabled)
-                        {
-                            <div class="inputs">
-                                @Html.LabelFor(model => model.CountryId, new { }, ":")
-                            @Html.DropDownList("CountryId", Model.AvailableCountries)
-                            </div>
-                        }
                         @if (Model.CountryEnabled && Model.StateProvinceEnabled)
                         {
                             <div class="inputs">
@@ -219,6 +208,25 @@
                                 <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
                             </div>
                         }
+                        @if (Model.ZipPostalCodeEnabled)
+                        {
+                            <div class="inputs">
+                                @Html.LabelFor(model => model.ZipPostalCode, new { }, ":")
+                            @Html.EditorFor(model => model.ZipPostalCode)
+                                @if (Model.ZipPostalCodeRequired)
+                                {
+                                    @Html.RequiredHint()
+                                }
+                                @Html.ValidationMessageFor(model => model.ZipPostalCode)
+                            </div>
+                        }
+                        @if (Model.CountryEnabled)
+                        {
+                            <div class="inputs">
+                                @Html.LabelFor(model => model.CountryId, new { }, ":")
+                            @Html.DropDownList("CountryId", Model.AvailableCountries)
+                            </div>
+                        } 
                     </div>
                 </div>
             }

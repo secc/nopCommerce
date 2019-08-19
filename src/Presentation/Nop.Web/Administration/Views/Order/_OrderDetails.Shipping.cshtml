@@ -1,4 +1,16 @@
 ﻿@model OrderModel
+
+@{
+    var campuses = new List<string>();
+    campuses.Add("Blankenbaker");
+    campuses.Add("Indiana");
+    campuses.Add("Crestwood");
+	campuses.Add("Southwest");
+	campuses.Add("LaGrange");
+	campuses.Add("Elizabethtown");
+	campuses.Add("River Valley");
+}
+
 @if (Model.IsShippable && Model.ShippingAddress != null)
 {
     <table class="adminContent">
@@ -344,14 +356,95 @@
         }
     </table>
 }
-else
-{
-    <table class="adminContent">
-        <tr>
-            <td class="adminTitle"></td>
-            <td class="adminData">
-                @T("Admin.Orders.ShippingInfo.NotRequired")
-            </td>
-        </tr>
-    </table>
-}
+//SECC BEGIN CHANGES
+        else
+        {
+           //Checking to see if the method is any of the In store pick ups
+            if (Model.ShippingMethod.ToUpper().Contains("STORE") && Model.ShippingMethod.ToUpper().Contains("PICK") && Model.ShippingStatus.ToLower().Contains("shipping") && Model.ShippingStatus.ToLower().Contains("required"))
+            {
+                foreach (var campus in campuses)
+                {
+                    if (Model.ShippingMethod.Contains(campus))
+                    {
+                        <table class="adminContent">
+                            <tr>
+                                <td class="adminTitle">
+                                    @T("Admin.Orders.ShippingInfo.ShippingStatus"):
+                                </td>
+                                <td class="adminData">
+                                    @Model.ShippingStatus (@campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="adminTitle">
+                                </td>
+                                <td class="adminData">
+                                    <input type="submit" name="instorepickup" value="@T("Admin.Orders.Fields.MarkAsReadyForPickup")" id="instorepickup" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")    ');"/><text>&nbsp;</text>
+                                </td>
+                            </tr>
+                        </table>
+                    } 
+                }
+               
+            }
+            else if (Model.ShippingStatus.Contains("Pickup") && Model.ShippingStatus.Contains("Ready") && Model.ShippingStatus.Contains("Store"))
+            {
+                foreach (var campus in campuses)
+                {
+                    if (Model.ShippingMethod.Contains(campus))
+                    {
+                        <table class="adminContent">
+                            <tr>
+                                <td class="adminTitle">
+                                    @T("Admin.Orders.ShippingInfo.ShippingStatus"):
+                                </td>
+                                <td class="adminData">
+                                    @Model.ShippingStatus (@campus)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="adminTitle">
+                                </td>
+                                <td class="adminData">
+                                    <input type="submit" name="pickedup" value="@T("Admin.Orders.Fields.MarkAsPickedup")" id="pickedup" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")    ');"/><text>&nbsp;</text>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                }
+            }
+            else if (Model.ShippingStatus.Contains("Picked Up"))
+            {
+                foreach (var campus in campuses)
+                {
+                    if (Model.ShippingMethod.Contains(campus))
+                    {
+                        <table class="adminContent">
+                            <tr>
+                                <td class="adminTitle">
+                                    @T("Admin.Orders.ShippingInfo.ShippingStatus"):
+                                </td>
+                                <td class="adminData">
+                                    @Model.ShippingStatus (@campus)
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                }
+            }
+            else
+            {
+                <table class="adminContent">
+                    <tr>
+                        <td class="adminTitle">
+
+                        </td>
+                        <td class="adminData">
+                            @T("Admin.Orders.ShippingInfo.NotRequired")
+                        </td>
+                    </tr>
+                </table>
+            }
+    
+        }
+@*END SECC CHANGES*@

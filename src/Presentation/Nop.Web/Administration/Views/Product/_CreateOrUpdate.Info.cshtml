@@ -25,6 +25,14 @@
         $("#@Html.FieldIdFor(model => model.ManageInventoryMethodId)").change(toggleManageStock);
         $("#@Html.FieldIdFor(model => model.BackorderModeId)").change(toggleManageStock);
         $("#@Html.FieldIdFor(model => model.DisplayStockAvailability)").click(toggleManageStock);
+
+	    @* BEGIN SECC *@
+	
+        $("#@Html.FieldIdFor(model => model.AllowCustomerReviews)").attr('checked', false);
+        $("#@Html.FieldIdFor(model => model.TaxCategoryId) option:eq(1)").attr('selected', true);
+        $("#@Html.FieldIdFor(model => model.Name)").blur(setDownloadableDefaults);
+	
+        @* END SECC *@
         
         toggleProductType();
         togglePreOrder();
@@ -37,6 +45,46 @@
         toggleTax();
         toggleManageStock();
     });
+
+    @* BEGIN SECC *@
+    
+    function setDownloadableDefaults() {
+        var MP3Text = "The Downloadable MP3s on this website are the copyrighted property of Southeast Christian Church of Jefferson County, Kentucky, Inc. (SECC) and/or of Robert L. Russell, Sr., Dave Stone, Kyle Idleman, and all rights are reserved. They are made available for purchase under the following terms. You may use the MP3s you have purchased solely for non-commercial, non-profit purposes in your church or ministry, in preparing your personal sermons and/or messages. However, you are not authorized to use content taken from the MP3s in works offered for resale or other commercial gain, nor are you authorized to duplicate, distribute, upload, or share MP3s or portions of them, whether in electronic or other form. By downloading MP3s from this site, you indicate your agreement to abide by these restrictions. If you wish to use these MP3s in any manner that is not authorized by these terms, please contact SECC at (502) 253-8200 to request a license for your desired use.  To indicate your agreement to these terms, and complete your download, click the box below and the continue button.";
+        var TranscriptText = "The Downloadable Transcripts on this website are the copyrighted property of Southeast Christian Church of Jefferson County, Kentucky, Inc. (SECC) and/or of Robert L. Russell, Sr., Dave Stone, Kyle Idleman, and all rights are reserved. They are made available for purchase under the following terms. You may use the Transcripts you have purchased solely for non-commercial, non-profit purposes in your church or ministry, in preparing your personal sermons and/or messages, including by cutting and pasting portions of the Transcripts. However, you are not authorized to use content taken from the Transcripts in works offered for resale or other commercial gain, nor are you authorized to duplicate, distribute, upload, or share Transcripts or portions of them, whether in print, electronic, or other form. By downloading Transcripts from this site, you indicate your agreement to abide by these restrictions. If you wish to use these Transcripts in any manner that is not authorized by these terms, please contact SECC at (502) 253-8200 to request a license for your desired use.  To indicate your agreement to these terms, and complete your download, click the box below and the continue button.";
+        var SkitText = "The Downloadable Skits on this website are the copyrighted property of Southeast Christian Church of Jefferson County, Kentucky, Inc. (SECC), and all rights are reserved. They are made available for purchase under the following terms. You may use the Skits you have purchased solely for non-commercial, non-profit purposes in your church or ministry, in preparing dramas or skits, including by cutting and pasting portions of the Skits. However, you are not authorized to use content taken from the Skits in works offered for resale or other commercial gain, nor are you authorized to duplicate, distribute, upload, or share Skits or portions of them, whether in print, electronic, or other form. By downloading Skits from this site, you indicate your agreement to abide by these restrictions. If you wish to use these Skits in any manner that is not authorized by these terms, please contact SECC at (502) 253-8200 to request a license for your desired use.  To indicate your agreement to these terms, and complete your download, click the box below and the continue button.";
+        var PVName = String($("#@Html.FieldIdFor(model => model.Name)").val());
+        var isMP3 = PVName.indexOf("MP3");
+        var isTranscript = PVName.indexOf("Transcript");
+        var isSkit = PVName.indexOf("Skit");
+
+	    if ( (isMP3 != -1) || (isTranscript != -1) || (isSkit != -1) ) {
+	        $("#@Html.FieldIdFor(model => model.IsDownload)").attr('checked', true);
+	        $("#@Html.FieldIdFor(model => model.HasUserAgreement)").attr('checked', true);
+	        
+	        if (isMP3 != -1) {
+	            $("#@Html.FieldIdFor(model => model.UserAgreementText)").val(MP3Text);
+	        }
+	        if (isTranscript != -1) {
+	            $("#@Html.FieldIdFor(model => model.UserAgreementText)").val(TranscriptText);
+	        }
+	        if (isSkit != -1) {
+	            $("#@Html.FieldIdFor(model => model.UserAgreementText)").val(SkitText);
+	        }
+
+            $("#@Html.FieldIdFor(model => model.IsShipEnabled)").attr('checked', false);
+	    }
+	    else
+	    {
+	        $("#@Html.FieldIdFor(model => model.IsDownload)").attr('checked', false);
+	        $("#@Html.FieldIdFor(model => model.HasUserAgreement)").attr('checked', false);
+	        $("#@Html.FieldIdFor(model => model.UserAgreementText)").val('');
+	        $("#@Html.FieldIdFor(model => model.IsShipEnabled)").attr('checked', true);
+	    }
+        toggleDownloadableProduct();
+        toggleShipping();
+    }
+    
+    @* END SECC *@
 
     function toggleProductType() {
         var selectedProductTypeId = $("#@Html.FieldIdFor(model => model.ProductTypeId)").val();

@@ -3,7 +3,7 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title, meta
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
@@ -43,27 +43,14 @@
                             </div>
                         }
                         @Html.Widget("productdetails_overview_top")
+                        <!--product SKU, manufacturer part number, stock info-->
+                        @Html.Partial("_SKU_Man_Stock", Model)
                         <!--product manufacturers-->
                         @Html.Action("ProductManufacturers", "Catalog", new { productId = Model.Id })
-                        <!--product reviews-->
-                        @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
-                        @Html.Action("ProductEmailAFriendButton", "Catalog", new { productId = Model.Id })
-                        @Html.Action("CompareProductsButton", "Catalog", new { productId = Model.Id })
-                        @Html.Action("ShareButton", "Catalog")
-                        @Html.Widget("productdetails_overview_bottom")
-                    </div>
-                    @if (!String.IsNullOrEmpty(Model.FullDescription))
-                    {
-                        <div class="full-description" itemprop="description">
-                            @Html.Raw(Model.FullDescription)
-                        </div>
-                    }
-                </div>
-                @Html.Widget("productdetails_before_collateral")
-                <div class="product-collateral">
-                    <!--associated products-->
-                    <div class="product-variant-list">
-                        @foreach (var variant in Model.AssociatedProducts)
+                        <!--associated products-->
+                        <div class="product-variant-list">
+                        @*secc changes*@
+                       @* @foreach (var variant in Model.AssociatedProducts)
                         {
                             <div class="product-variant-line" data-productid="@variant.Id">
                                 @if (!String.IsNullOrWhiteSpace(variant.DefaultPictureModel.ImageUrl))
@@ -120,15 +107,88 @@
                             <div class="no-associated-products">
                                 @T("Products.NoAssociatedProducts")
                             </div>
-                        }
+                        }*@
+                        <script>
+                            function doThis() {
+                                $('div.add-to-cart').hide();
+                                var e = document.getElementById('ddlProductVariants');
+                                var idValue = e.options[e.selectedIndex].value;
+                                $('div[id=addtocart_container]').show();
+                                $('div[id=addtocart_' + idValue + ']').show();
+                                if (idValue == '') {
+                                    $('div[id=temp-controls]').show();
+                                    alert('Please select a format');
+                                }
+                            }
+
+                            //function takeAction() {
+                            //    var e = document.getElementById('ddlProductVariants');
+                            //    var idValue = e.options[e.selectedIndex].value;
+                            //    if (idVelue == '') {
+                            //        alert('Please select a format');
+                            //    }
+                            //}
+                        </script>
+                        <strong>Format:</strong><br />
+                        @Html.DropDownList("ddlProductVariants",
+                        new SelectList((from variant in Model.AssociatedProducts
+                                       select new { IdValue = variant.Id, TextValue = variant.Name + " - " + variant.ProductPrice.Price }), "IdValue", "TextValue"), "please select", new { @class = "short-description", @onchange ="doThis();"})
+                  
+                        @foreach (var variant in Model.AssociatedProducts)
+	                    {
+                            var dataDictAddToCart = new ViewDataDictionary();
+                            dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", variant.Id);
+                            <div id="addtocart_container" style="display:none;">@Html.Partial("_AddToCart", variant.AddToCart, dataDictAddToCart)</div>
+	                    }
+                        <div id="temp-controls" class="add-to-cart">
+                            <label class="qty-label">Qty:</label>
+                            <input class="qty-input" type="text" value="1" disabled="disabled" />                
+                            <input type="button" class="button-1 add-to-cart-button" value="Add to cart" disabled="disabled"/>
+                            <input type="button" class="button-2 add-to-wishlist-button" value="Add to wishlist" disabled="disabled" />
+                        </div>
+                        <input type="hidden" id="refreshed" value="no"/>
+                        <script type="text/javascript">
+                            onload = function () {
+                                var e = document.getElementById("refreshed");
+                                if (e.value == "no") e.value = "yes";
+                                else {
+                                    e.value = "no";
+                                    location.reload();
+                                    var e = document.getElementById('ddlProductVariants');
+                                    e.selectedIndex = 0; //to fix firefox display issue);
+                                }
+                            }
+                        </script>
                     </div>
+                        <!--product reviews-->
+                        @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
+                        @Html.Action("ProductEmailAFriendButton", "Catalog", new { productId = Model.Id })
+                        @Html.Action("CompareProductsButton", "Catalog", new { productId = Model.Id })
+                        @Html.Action("ShareButton", "Catalog")
+                        @Html.Widget("productdetails_overview_bottom")
+
+                    </div>
+
+                    @if (!String.IsNullOrEmpty(Model.FullDescription))
+                    {
+                        <div class="full-description" itemprop="description">
+                            @Html.Raw(Model.FullDescription)
+                        </div>
+                    }
+                    
+
+                </div>
+                @Html.Widget("productdetails_before_collateral")
+                <div class="product-collateral">
                     @Html.Action("ProductSpecifications", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductTags", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductsAlsoPurchased", "Catalog", new { productId = Model.Id })
+                    @*@Html.Action("ProductTags", "Catalog", new { productId = Model.Id })*@
+                    @*@Html.Action("ProductsAlsoPurchased", "Catalog", new { productId = Model.Id })*@
                     @Html.Action("RelatedProducts", "Catalog", new { productId = Model.Id })
+                    @Html.Action("RecentlyViewedProductsBlock", "Catalog", new { productThumbPictureSize = 50 })
                 </div>
             </div>
         }
         @Html.Widget("productdetails_bottom")
     </div>
+    <div id="footerBlueBorder"></div>
 </div>

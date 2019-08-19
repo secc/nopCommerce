@@ -1,7 +1,7 @@
 ﻿@model ProductDetailsModel.AddToCartModel
 @using Nop.Web.Models.Catalog;
 @using Nop.Core.Domain.Orders;
-<div class="add-to-cart">
+<div id="@string.Format("addtocart_{0}", Model.ProductId)" class="add-to-cart">
     @if (Model.UpdatedShoppingCartItemId > 0)
     {
         @Html.HiddenFor(x => x.UpdatedShoppingCartItemId)

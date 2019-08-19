@@ -176,8 +176,12 @@
                 @Html.NopLabelFor(model => model.SenderName):
             </td>
             <td class="adminData">
+                @*BEGIN SECC CHANGES*@
+                @*@Html.EditorFor(model => model.DefaultSenderName)
+                @Html.ValidationMessageFor(model => model.DefaultSenderName)*@
                 @Html.EditorFor(model => model.SenderName)
                 @Html.ValidationMessageFor(model => model.SenderName)
+                @*END SECC CHANGES*@
             </td>
         </tr>
         <tr id="pnlSenderEmail">
@@ -185,8 +189,12 @@
                 @Html.NopLabelFor(model => model.SenderEmail):
             </td>
             <td class="adminData">
+                @*BEGIN SECC CHANGES*@
+                @*@Html.EditorFor(model => model.DefaultSenderEmail)
+                @Html.ValidationMessageFor(model => model.DefaultSenderEmail)*@
                 @Html.EditorFor(model => model.SenderEmail)
                 @Html.ValidationMessageFor(model => model.SenderEmail)
+                @*END SECC CHANGES*@
             </td>
         </tr>
         <tr>

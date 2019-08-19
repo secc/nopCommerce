@@ -77,7 +77,7 @@
         $('a', $(this)).first().addClass('hover');
         if (!$(this).parent().hasClass('top-menu')) {
             var width = $(this).innerWidth();
-            $('.sublist', $(this)).first().css('@(isRtl ? "right" : "left")', width + 15);
+            $('.sublist', $(this)).first().css('@(isRtl ? "right" : "left")', width /*+ 15*/);
         }
         $('.sublist', $(this)).first().addClass('active');
         $('.top-menu-triangle', $(this)).addClass('active');

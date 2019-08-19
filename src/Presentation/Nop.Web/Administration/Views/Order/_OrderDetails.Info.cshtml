@@ -1,6 +1,9 @@
 ﻿@model OrderModel
 @using Nop.Core.Domain.Tax;
 @using Nop.Core.Domain.Orders;
+@*BEGIN SECC CHANGES*@
+@using Nop.Core.Domain.Payments;
+@*END SECC CHANGES*@
 
 @if (!Model.IsLoggedInAsVendor)
 {
@@ -88,14 +91,28 @@
                 {
                     <input type="submit" name="cancelorder" value="@T("Admin.Orders.Fields.OrderStatus.Cancel")" id="cancelorder" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")');"  />
                 }
-                <input type="submit" name="btnChangeOrderStatus" value="@T("Admin.Orders.Fields.OrderStatus.Change")" onclick="toggleChangeOrderStatus(true);return false;" id="btnChangeOrderStatus" class="adminButton"  />
+                @*BEGIN SECC CHANGES*@
+                @if (Model.OrderStatus.ToUpper().Contains("NEW") && Model.OrderStatus.ToUpper().Contains("PROCESSING"))
+                {
+                    <input type="submit" name="markProcessing" value="@T("Admin.Orders.Fields.OrderStatus.Processing")" id="markProcessing" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")    ');"/>
+                }
+                @if (Model.PaymentStatus == PaymentStatus.Paid.ToString() && (Model.OrderStatus == OrderStatus.Processing.ToString() || Model.OrderStatus.Contains("Back")))
+                {
+                    <input type="submit" name="completeOrder" value = "@T("Admin.Orders.Fields.OrderStatus.Complete")" id="completeOrder" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")    ');"/>
+                }
+                @if (Model.PaymentStatus == PaymentStatus.Paid.ToString() && (Model.OrderStatus.ToUpper().Contains("NEW") || Model.OrderStatus == OrderStatus.Processing.ToString() || Model.OrderStatus == OrderStatus.Pending.ToString()))
+                {
+                    <input type="submit" name="backOrder" value="@T("Admin.Orders.Fields.OrderStatus.BackOrder")" id="backOrder" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")    ');"/>
+                }
+                @*END SECC CHANGES*@
+                @*<input type="submit" name="btnChangeOrderStatus" value="@T("Admin.Orders.Fields.OrderStatus.Change")" onclick="toggleChangeOrderStatus(true);return false;" id="btnChangeOrderStatus" class="adminButton"  />
                 <div id="pnlChangeOrderStatus">
                     <em>@T("Admin.Orders.Fields.OrderStatus.Change.ForAdvancedUsers")</em>
                     <br />
                     @Html.DropDownListFor(model => model.OrderStatusId, ((OrderStatus)Model.OrderStatusId).ToSelectList())
                     <input type="submit" name="btnSaveOrderStatus" value="@T("Admin.Common.Save")" id="btnSaveOrderStatus" class="adminButton" onclick="return confirm('@T("Admin.Common.AreYouSure")');"  />
                     <input type="submit" name="btnCancelOrderStatus" value="@T("Admin.Common.Cancel")" onclick="toggleChangeOrderStatus(false);return false;" id="btnCancelOrderStatus" class="adminButton" />
-                </div>
+                </div>*@
             </td>
         </tr>
     }

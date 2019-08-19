@@ -38,6 +38,11 @@
 <div class="page checkout-page">
     <div class="page-title">
         <h1>@T("Checkout")</h1>
+        @*BEGIN SECC CHANGE*@
+        <input type="submit" id="backToCart" onclick="window.location='@Url.Action("Cart", "ShoppingCart")'" value="@T("OnePageCheckout.ApplyRewardsCode")"/>
+        @*END SECC CHANGE*@
+    </div>
+    <div class="clear">
     </div>
     <div class="page-body checkout-data">
         <ol class="opc" id="checkout-steps">

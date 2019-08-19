@@ -4,13 +4,17 @@
 {
     <div class="coupon-box">
         <div class="title">
-            <strong>@T("ShoppingCart.DiscountCouponCode")</strong>
+            @*BEGIN SECC CHANGES*@
+            <strong style="color:green; font-size: larger">@T("ShoppingCart.DiscountCouponCode")</strong>
+            @*END SECC CHANGES*@
         </div>
         <div class="hint">
             @T("ShoppingCart.DiscountCouponCode.Tooltip")
         </div>
         <div class="coupon-code">
-            <input name="discountcouponcode" type="text" class="discount-coupon-code" />
+            @*BEGIN SECC CHANGES*@
+            <input name="discountcouponcode" type="text" class="discount-coupon-code" style="border-color: black" />&nbsp;
+            @*END SECC CHANGES*@
             <input type="submit" name="applydiscountcouponcode" value="@T("ShoppingCart.DiscountCouponCode.Button")" class="button-2 apply-discount-coupon-code-button" />
         </div>
         @if (!String.IsNullOrEmpty(Model.Message))

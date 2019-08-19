@@ -25,8 +25,8 @@
     </div>
     <div class="page-body">
         @Html.Raw(Model.UserAgreementText)
-        <div>
-            <input id="agreement-agree" type="checkbox" value="@T("DownloadableProducts.IAgree")" />
+        <div id="iagree">
+            <input id="agreement-agree" type="checkbox" value="@T("DownloadableProducts.IAgree")" /> @T("DownloadableProducts.IAgree")
         </div>
         <div>
             <input type="submit" id="continue-downloading" class="button-1 user-agreement-button" value="@T("Common.Continue")" onclick="setLocation('@Url.RouteUrl("GetDownload", new { orderItemId = Model.OrderItemGuid, agree = true })')" />

@@ -6,7 +6,7 @@
 
 <div class="footer">
     <div class="footer-menu-wrapper">
-        <div class="column information">
+        @*<div class="column information">
             <h3>@T("Footer.Information")</h3>
             <ul>
                 @if (Model.SitemapEnabled)
@@ -95,6 +95,34 @@
                 {
                     <li class="google-plus"><a href="@Model.GooglePlusLink" target="_blank">@T("Footer.FollowUs.GooglePlus")</a></li>
                 }
+            </ul>
+        </div>*@
+        <div id="seccLogoAndInfo">
+            <a href="http://www.southeastchristian.org" id="seccLogo" target="_blank">
+                
+            </a>
+            <p>SOUTHEAST CHRISTIAN CHURCH</p>
+            <span>Connecting people to Jesus and one another</span>
+        </div>
+        <div id="seccLeftFooter">
+            <ul>
+                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> </li>
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("hours") })">@T("Hours")</a></li>
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("aboutus") })">@T("AboutUs")</a></li>
+            </ul>
+        </div>
+        <div id="seccMiddleFooter">
+            <ul>
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") })">@T("ShippingReturns")</a></li>
+                <li><a href="/recent-sermons">@T("RecentSermons")</a></li>
+                <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
+            </ul>
+        </div>
+        <div id="seccRightFooter">
+            <ul>
+                <li><a href="https://www.southeastchristian.org/terms.php" target="_blank">@T("ConditionsOfUse")</a></li>
+                <li><a href="https://www.southeastchristian.org/privacy-policy.php" target="_blank">@T("PrivacyNotice")</a></li>
+                <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
             </ul>
         </div>
     </div>

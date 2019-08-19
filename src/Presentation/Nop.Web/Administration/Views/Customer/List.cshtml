@@ -134,6 +134,16 @@
                 </td>
             </tr>
         } 
+        @*begin secc changes--adding IsTaxExempt*@
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.IsTaxExempt):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.IsTaxExempt)
+                </td>
+            </tr>
+        @*end secc changes--adding IsTaxExempt*@
         <tr>
             <td colspan="2">
                 <input type="button" id="search-customers" class="k-button" value="@T("Admin.Common.Search")" />
@@ -260,6 +270,13 @@
                                 type: "date",
                                 format: "{0:G}"
                             }, {
+                                field: "IsTaxExempt",
+                                title: "@T("Admin.Customers.Customers.Fields.IsTaxExempt")",
+                                width: 100,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsTaxExempt#.gif" />'
+                            },{
                                 field: "Id",
                                 title: "@T("Admin.Common.Edit")",
                                 width: 50,
@@ -406,7 +423,8 @@
                             SearchMonthOfBirth: $('#@Html.FieldIdFor(model => model.SearchMonthOfBirth)').val(),
                             SearchCompany: $('#@Html.FieldIdFor(model => model.SearchCompany)').val(),
                             SearchPhone: $('#@Html.FieldIdFor(model => model.SearchPhone)').val(),
-                            SearchZipPostalCode: $('#@Html.FieldIdFor(model => model.SearchZipPostalCode)').val()
+                            SearchZipPostalCode: $('#@Html.FieldIdFor(model => model.SearchZipPostalCode)').val(),
+                            IsTaxExempt: $('#@Html.FieldIdFor(model => model.IsTaxExempt)').prop('checked')
                         };
                     }
                 </script>

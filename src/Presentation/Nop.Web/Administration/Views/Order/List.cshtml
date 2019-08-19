@@ -39,9 +39,19 @@
                 @Html.NopLabelFor(model => model.EndDate):
             </td>
             <td class="adminData">
-                @Html.EditorFor(model => model.EndDate)
+                @Html.EditorFor(model => Model.EndDate)
             </td>
         </tr>
+        @*BEGIN SECC CHANGES*@
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.CustomerName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.CustomerName)
+            </td>
+        </tr>
+        @*END SECC CHANGES*@
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.CustomerEmail):
@@ -107,6 +117,33 @@
                 <input type="submit" name="go-to-order-by-number" class="k-button" value="@T("Admin.Common.Go")" />
             </td>
         </tr>
+         @*BEGIN SECC CHANGES*@
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StateId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("StateId", Model.States)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ZipCode):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.ZipCode)
+                @Html.ValidationMessageFor(model => Model.ZipCode)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => Model.Sku):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.Sku)
+            </td>
+        </tr>
+        @* SECC Ends here*@
         <tr>
             <td colspan="2">
                 <input type="button" id="btnSearch" class="k-button" value="@T("Admin.Common.Search")" />
@@ -327,13 +364,17 @@
                         return {
                             StartDate: $('#@Html.FieldIdFor(model => model.StartDate)').val(),
                             EndDate: $('#@Html.FieldIdFor(model => model.EndDate)').val(),
+                            CustomerName: $('#@Html.FieldIdFor(model => model.CustomerName)').val(),
                             CustomerEmail: $('#@Html.FieldIdFor(model => model.CustomerEmail)').val(),
                             OrderStatusId: $('#@Html.FieldIdFor(model => model.OrderStatusId)').val(),
                             PaymentStatusId: $('#@Html.FieldIdFor(model => model.PaymentStatusId)').val(),
                             ShippingStatusId: $('#@Html.FieldIdFor(model => model.ShippingStatusId)').val(),
                             StoreId: $('#@Html.FieldIdFor(model => model.StoreId)').val(),
                             VendorId: $('#@Html.FieldIdFor(model => model.VendorId)').val(),
-                            OrderGuid: $('#@Html.FieldIdFor(model => model.OrderGuid)').val()
+                            OrderGuid: $('#@Html.FieldIdFor(model => model.OrderGuid)').val(),
+                            ZipCode: $('#@Html.FieldIdFor(model => model.ZipCode)').val(),
+                            StateId: $('#@Html.FieldIdFor(model => model.StateId)').val(),
+                            Sku: $('#@Html.FieldIdFor(model => model.Sku)').val()
                         };
                     }
 

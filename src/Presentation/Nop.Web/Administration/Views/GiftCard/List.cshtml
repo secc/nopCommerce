@@ -33,6 +33,25 @@
                 @Html.EditorFor(model => model.CouponCode)
             </td>
         </tr>
+        @*BEGIN SECC CHANGES*@
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Recipient):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Recipient)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Email)
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Email)
+            </td>
+        </tr>
+        @*END SECC CHANGES*@
         <tr>
             <td colspan="2">
                 <input type="button" id="btnSearch" class="k-button" value="@T("Admin.Common.Search")" />
@@ -136,7 +155,11 @@
                     function additionalData() {
                         return {
                             ActivatedId: $('#@Html.FieldIdFor(model => model.ActivatedId)').val(),
-                            CouponCode: $('#@Html.FieldIdFor(model => model.CouponCode)').val()
+                            CouponCode: $('#@Html.FieldIdFor(model => model.CouponCode)').val(),
+                            //BEGIN SECC CHANGES
+                            Recipient: $('#@Html.FieldIdFor(model => model.Recipient)').val(),
+                            Email: $('#@Html.FieldIdFor(model => model.Email)').val()
+                            //END SECC CHANGES
                         };
                     }
 

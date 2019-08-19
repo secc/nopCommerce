@@ -2,7 +2,7 @@
 @using Nop.Web.Framework.Themes
 @{
     var currentThemeName = EngineContext.Current.Resolve<IThemeContext>().WorkingDesktopTheme;
-    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/logo.gif";
+    var logoPath = "~/Themes/" + currentThemeName + "/Content/images/living_word_logo.png";
 }
 
 <div class="header">
@@ -18,6 +18,11 @@
     </div>
     <div class="search-box">
         @Html.Action("SearchBox", "Catalog")
+        @* put facebook and other thing here *@
+        <div id="facebookLinkAndChurchInfo">
+            <a id="lWordFaceBook" class="xtraLink" target="_blank" href="https://www.facebook.com/TheLivingWord"> </a>
+            <a id="seccLinkToChurch" class="xtraLink" target="_blank" href="http://www.southeastchristian.org"> visit southeast christian church's site </a>
+        </div>
     </div>
     <div class="header-selectors-wrapper">
         <div class="tax-display-type-selector">

@@ -4,9 +4,9 @@
 @if (Model.CountryEnabled && Model.StateProvinceEnabled)
 {
     <script type="text/javascript">
-        $(function () {
-            $("#@Html.FieldIdFor(model => model.CountryId)").change(function () {
-                var selectedItem = $(this).val();
+        //$(function () {
+            //$("#@Html.FieldIdFor(model => model.CountryId)").change(function () {
+            @*var selectedItem = $("#@Html.FieldIdFor(model => model.CountryId)").val();
                 var ddlStates = $("#@Html.FieldIdFor(model => model.StateProvinceId)");
                 var statesProgress = $("#states-loading-progress");
                 statesProgress.show();
@@ -26,9 +26,9 @@
                         alert('Failed to retrieve states.');
                         statesProgress.hide();
                     }
-                });
-            });
-        });
+                });*@
+            //});
+        //});
     </script>
 }
 @Html.HiddenFor(model => model.Id)
@@ -44,7 +44,13 @@
             @Html.EditorFor(model => model.LastName)
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.LastName)
-
+        <script>
+            var url = window.location.pathname.toString();
+            if (url.indexOf('onepagecheckout') >= 0) {
+                $('#ShippingNewAddress_Email').after('<span style="font-weight:bold; color:#1E5474"> ~Please enter your email address~</span>');
+                $('#ShippingNewAddress_PhoneNumber').after('<span style="font-weight:bold; color:#1E5474"> ~Please enter your phone number~</span>');
+            }
+        </script>
     </div>
     <div class="inputs">
         @Html.LabelFor(model => model.Email, new { }, ":")
@@ -62,38 +68,6 @@
                 @Html.RequiredHint()
             }
             @Html.ValidationMessageFor(model => model.Company)
-        </div>
-    }
-    @if (Model.CountryEnabled)
-    {
-        <div class="inputs">
-            @Html.LabelFor(model => model.CountryId, new { }, ":")
-                @Html.DropDownListFor(model => model.CountryId, Model.AvailableCountries)
-            @Html.RequiredHint()
-            @Html.ValidationMessageFor(model => model.CountryId)
-        </div>
-    }
-
-    @if (Model.CountryEnabled && Model.StateProvinceEnabled)
-    {
-        <div class="inputs">
-            @Html.LabelFor(model => model.StateProvinceId, new { }, ":")
-                @Html.DropDownListFor(model => model.StateProvinceId, Model.AvailableStates)
-            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
-            @Html.ValidationMessageFor(model => model.StateProvinceId)
-        </div>
-    }
-    @if (Model.CityEnabled)
-    {
-        <div class="inputs">
-            @Html.LabelFor(model => model.City, new { }, ":")
-                @Html.EditorFor(model => model.City)
-
-            @if (Model.CityRequired)
-            {
-                @Html.RequiredHint()
-            }
-            @Html.ValidationMessageFor(model => model.City)
         </div>
     }
     @if (Model.StreetAddressEnabled)
@@ -120,6 +94,28 @@
             @Html.ValidationMessageFor(model => model.Address2)
         </div>
     }
+    @if (Model.CityEnabled)
+    {
+        <div class="inputs">
+            @Html.LabelFor(model => model.City, new { }, ":")
+                @Html.EditorFor(model => model.City)
+
+            @if (Model.CityRequired)
+            {
+                @Html.RequiredHint()
+            }
+            @Html.ValidationMessageFor(model => model.City)
+        </div>
+    }
+    @if (Model.CountryEnabled && Model.StateProvinceEnabled)
+    {
+        <div class="inputs">
+            @Html.LabelFor(model => model.StateProvinceId, new { }, ":")
+                @Html.DropDownListFor(model => model.StateProvinceId, Model.AvailableStates)
+            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+            @Html.ValidationMessageFor(model => model.StateProvinceId)
+        </div>
+    }
     @if (Model.ZipPostalCodeEnabled)
     {
         <div class="inputs">
@@ -130,6 +126,15 @@
                 @Html.RequiredHint()
             }
             @Html.ValidationMessageFor(model => model.ZipPostalCode)
+        </div>
+    }
+    @if (Model.CountryEnabled)
+    {
+        <div class="inputs">
+            @Html.LabelFor(model => model.CountryId, new { }, ":")
+                @Html.DropDownListFor(model => model.CountryId, Model.AvailableCountries)
+            @Html.RequiredHint()
+            @Html.ValidationMessageFor(model => model.CountryId)
         </div>
     }
     @if (Model.PhoneEnabled)

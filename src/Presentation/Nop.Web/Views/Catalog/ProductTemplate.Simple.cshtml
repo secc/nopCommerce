@@ -3,7 +3,7 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title, meta
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
@@ -91,12 +91,14 @@
                 <div class="product-collateral">
                     @Html.Action("ProductTierPrices", "Catalog", new { productId = Model.Id })
                     @Html.Action("ProductSpecifications", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductTags", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductsAlsoPurchased", "Catalog", new { productId = Model.Id })
+                    @*@Html.Action("ProductTags", "Catalog", new { productId = Model.Id })*@
+                    @*@Html.Action("ProductsAlsoPurchased", "Catalog", new { productId = Model.Id })*@
                     @Html.Action("RelatedProducts", "Catalog", new { productId = Model.Id })
+                    @Html.Action("RecentlyViewedProductsBlock", "Catalog", new { productThumbPictureSize = 50 })
                 </div>
             </div>
         }
         @Html.Widget("productdetails_bottom")
     </div>
+    <div id="footerBlueBorder"></div>
 </div>

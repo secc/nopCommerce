@@ -1,15 +1,37 @@
 ﻿@{
-    Layout = "~/Views/Shared/_ColumnsThree.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 }
 <div class="page home-page">
     <div class="page-body">
         @Html.Widget("home_page_top")
-        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
-        @Html.Action("HomepageCategories", "Catalog")
-        @Html.Action("HomepageProducts", "Catalog")
-        @Html.Action("HomepageBestSellers", "Catalog")
-        @Html.Action("HomePageNews", "News")
-        @Html.Action("HomePagePolls", "Poll")
-        @Html.Widget("home_page_bottom")
+        <div id="homePageMain"> @*begin secc changes*@
+            <div id="homePageLeft" class="homePageCol">
+                @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+                @Html.Action("HomepageCategories", "Catalog")
+                @Html.Action("HomepageProducts", "Catalog")
+                @Html.Action("HomepageBestSellers", "Catalog")
+                @Html.Action("HomePageNews", "News")
+                @Html.Action("HomePagePolls", "Poll")
+                @Html.Widget("home_page_bottom")
+                @Html.Action("RecentlyViewedProductsBlock", "Catalog", new { productThumbPictureSize = 50 })
+            </div> 
+            <div id="homePageRight" class="homePageCol">
+                <div id="seccStoreHours">
+                        <p class="color1 campusName">BLANKENBAKER CAMPUS</p>
+                        <span>920 Blankenbaker Parkway <br /> Louisville, KY 40243<br />
+                        <a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("hours") })">@T("Hours")</a></span>
+					
+						<p></p>
+                </div>
+                <div id="seccRewards">
+                    <a href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("earnrewards")})"></a>
+                </div>
+                <!--<div id="seccAdSpace">
+                    <a href="http://www.prayreachchallenge.com"></a>
+                </div>-->
+            </div>
+            <div id="clearMe">.<br /></div>
+        </div>
+        <div id="footerBlueBorder"></div>@*end secc changes*@
     </div>
 </div>

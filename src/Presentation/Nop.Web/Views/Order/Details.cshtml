@@ -248,6 +248,21 @@
                                 </ul>
                             </td>
                         }
+                        @*BEGIN SECC CHANGES*@
+                        else
+                        {
+                              <td class="shippinginfo">
+                                  <div class="shipping-method">
+                                      <div class="shipping-method-label">
+                                          <strong>@T("Order.ShippingMethod")</strong>
+                                      </div>
+                                      <div class="shipping-method-value">
+                                          @Model.ShippingMethod
+                                      </div>
+                                  </div>
+                              </td>  
+                        }
+                        @*END SECC CHANGES*@
                     </tr>
                 </tbody>
             </table>
@@ -478,6 +493,18 @@
                             <td class="cart-total-right">
                                 <span class="nobr">
                                     @gc.Amount
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cart-total-left">
+                                <strong>
+                                    @string.Format(T("Order.GiftCardAmtRemaining").Text, gc.CouponCode):
+                                </strong>
+                            </td>
+                            <td class="cart-total-right">
+                                <span class="nobr">
+                                    @gc.AmountRemaining
                                 </span>
                             </td>
                         </tr>

@@ -28,6 +28,17 @@
                     <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">@T("Checkout.PlacedOrderDetails")</a>
                 </li>
             </ul>
+            @*BEGIN SECC CHANGES *@
+            @if(ViewBag.HasDownload)
+            {
+                foreach (var item in ViewBag.Products)
+                {
+                    string productName = string.Format("Click here to download {0}", item.Product.Name);
+                    <p>
+                        @Html.ActionLink(productName, "GetDownload", new { orderItemId = item.OrderItemGuid }, new {id = "seccDownload", target = "_blank"})
+                    </p>
+                }
+            }
             <div class="buttons">
                 <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-2 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
             </div>

@@ -1,6 +1,6 @@
 ﻿@model SearchModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Search").Text);
@@ -40,7 +40,7 @@
                         @Html.TextBoxFor(model => model.Q, new { @class = "search-text" })
                     </div>
                     @Html.Widget("productsearch_page_basic")
-                    <div class="inputs reversed">
+                    <div class="inputs reversed hide">
                         @Html.CheckBoxFor(model => model.As)
                         @Html.LabelFor(model => model.As)
                     </div>
@@ -48,11 +48,11 @@
                 <div class="advanced-search" id="advanced-search-block">
                     @if (Model.AvailableCategories.Count > 0)
                     {
-                        <div class="inputs">
+                        <div class="inputs hide">
                             @Html.LabelFor(model => model.Cid, new { }, ":")
                             @Html.DropDownListFor(model => model.Cid, Model.AvailableCategories)
                         </div>
-                        <div class="inputs reversed">
+                        <div class="inputs reversed hide">
                             @Html.CheckBoxFor(model => model.Isc)
                             @Html.LabelFor(model => model.Isc)
                         </div>
@@ -64,7 +64,7 @@
                             @Html.DropDownListFor(model => model.Mid, Model.AvailableManufacturers)
                         </div>
                     }
-                    <div class="inputs">
+                    <div class="inputs hide">
                         <label>@T("Search.PriceRange"):</label>
                         <span class="price-range">
                             @T("Search.PriceRange.From")
@@ -73,7 +73,7 @@
                             @Html.TextBoxFor(model => model.Pt, new { @class = "price-to" })
                         </span>
                     </div>
-                    <div class="inputs reversed">
+                    <div class="inputs reversed hide">
                         @Html.CheckBoxFor(model => model.Sid)
                         @Html.LabelFor(model => model.Sid)
                     </div>

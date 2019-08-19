@@ -18,8 +18,19 @@
                                 <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" title="@product.DefaultPictureModel.Title">
                                     <img alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
                                 </a>
+                                <br />
+                                <span class="seccPrice">@product.ProductPrice.Price</span>
                             </div>
                         }
+                        @*@if (!string.IsNullOrEmpty(@product.ProductPrice.Price))
+                        {
+                            <br />
+                            <span class="seccPrice">@product.ProductPrice.Price</span>
+                        }
+                        else {
+                            <br />
+                            <div class="seccPrice">No price</div>   
+                        }*@
                         <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" class="product-name">@product.Name</a>
                     </li>
                 }
